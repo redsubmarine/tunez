@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "tunez",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
