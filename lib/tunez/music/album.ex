@@ -1,5 +1,13 @@
 defmodule Tunez.Music.Album do
-  use Ash.Resource, otp_app: :tunez, domain: Tunez.Music, data_layer: AshPostgres.DataLayer
+  use Ash.Resource,
+    otp_app: :tunez,
+    domain: Tunez.Music,
+    data_layer: AshPostgres.DataLayer,
+    extensions: [AshJsonApi.Resource]
+
+  json_api do
+    type "album"
+  end
 
   postgres do
     table "albums"
@@ -58,12 +66,12 @@ defmodule Tunez.Music.Album do
     end
   end
 
+  def next_year, do: Date.utc_today().year + 1
+
   calculations do
     calculate :years_ago, :integer, expr(2026 - year_released)
     calculate :string_years_ago, :string, expr("wow, this was released #{years_ago} years ago!")
   end
-
-  def next_year, do: Date.utc_today().year + 1
 
   identities do
     identity :unique_album_names_per_artist, [:name, :artist_id],
