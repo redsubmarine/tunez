@@ -17,13 +17,16 @@ defmodule TunezWeb.Artists.IndexLive do
     page_params = AshPhoenix.LiveView.page_from_params(params, 12)
 
     page =
-      Tunez.Music.search_artists!(query_text, page: page_params, query: [sort_input: sort_by])
+      Tunez.Music.search_artists!(query_text,
+        page: page_params,
+        query: [sort_input: sort_by]
+      )
 
     socket =
       socket
+      |> assign(:sort_by, sort_by)
       |> assign(:query_text, query_text)
       |> assign(:page, page)
-      |> assign(:sort_by, sort_by)
 
     {:noreply, socket}
   end
@@ -56,7 +59,7 @@ defmodule TunezWeb.Artists.IndexLive do
           <.artist_card artist={artist} />
         </li>
       </ul>
-      <.pagination_links page={@page} query={@query_text} sort_by={@sort_by} />
+      <.pagination_links page={@page} query_text={@query_text} sort_by={@sort_by} />
     </Layouts.app>
     """
   end
@@ -65,7 +68,7 @@ defmodule TunezWeb.Artists.IndexLive do
     ~H"""
     <div id={"artist-#{@artist.id}"} data-role="artist-card" class="relative mb-2">
       <.link navigate={~p"/artists/#{@artist.id}"}>
-        <.cover_image />
+        <.cover_image image={@artist.cover_image_url} />
       </.link>
     </div>
     <p class="flex justify-between">
