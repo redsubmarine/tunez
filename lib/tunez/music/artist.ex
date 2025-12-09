@@ -48,10 +48,13 @@ defmodule Tunez.Music.Artist do
       public? true
     end
 
-    attribute :biography, :string
-
     attribute :previous_names, {:array, :string} do
       default []
+      public? true
+    end
+
+    attribute :biography, :string do
+      public? true
     end
 
     create_timestamp :inserted_at, public?: true
@@ -63,12 +66,6 @@ defmodule Tunez.Music.Artist do
       sort year_released: :desc
     end
   end
-
-  # calculations do
-  #   calculate :album_count, :integer, expr(count(albums))
-  #   calculate :latest_album_year, :integer, expr(first(albums, field: :year_released))
-  #   calculate :cover_image_url, :string, expr(first(albums, field: :cover_image_url))
-  # end
 
   aggregates do
     count :album_count, :albums do
