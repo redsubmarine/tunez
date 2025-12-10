@@ -1,5 +1,5 @@
 defmodule Tunez.Accounts do
-  use Ash.Domain, otp_app: :tunez, extensions: [AshJsonApi.Domain]
+  use Ash.Domain, extensions: [AshJsonApi.Domain]
 
   json_api do
     routes do
