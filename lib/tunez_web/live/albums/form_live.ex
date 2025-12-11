@@ -34,17 +34,6 @@ defmodule TunezWeb.Albums.FormLive do
     {:ok, socket}
   end
 
-  # def mount(_params, _session, socket) do
-  #   form = Tunez.Music.form_to_create_album()
-
-  #   socket =
-  #     socket
-  #     |> assign(:form, to_form(form))
-  #     |> assign(:page_title, "New Album")
-
-  #   {:ok, socket}
-  # end
-
   def render(assigns) do
     ~H"""
     <Layouts.app {assigns}>
