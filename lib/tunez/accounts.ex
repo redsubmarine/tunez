@@ -1,5 +1,5 @@
 defmodule Tunez.Accounts do
-  use Ash.Domain, extensions: [AshJsonApi.Domain]
+  use Ash.Domain, extensions: [AshGraphql.Domain, AshJsonApi.Domain]
 
   json_api do
     routes do
