@@ -4,9 +4,8 @@ defmodule Tunez.Music.ArtistTest do
   alias Tunez.Music, warn: false
 
   describe "Tunez.Music.read_artists!/0-2" do
-    @tag :skip
     test "when there is no data, nothing is returned" do
-      # assert Music.read_artists!() == []
+      assert Music.read_artists!() == []
     end
   end
 
