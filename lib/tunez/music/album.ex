@@ -62,7 +62,7 @@ defmodule Tunez.Music.Album do
 
   validations do
     validate numericality(:year_released,
-               greater_than_or_equal_to: 1950,
+               greater_than: 1950,
                less_than_or_equal_to: &__MODULE__.next_year/0
              ),
              where: [present(:year_released)],

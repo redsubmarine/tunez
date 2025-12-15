@@ -12,14 +12,13 @@ defmodule Tunez.Music.ArtistTest do
   describe "Tunez.Music.search_artists/1-2" do
     def names(page), do: Enum.map(page.results, & &1.name)
 
-    @tag :skip
     test "can filter by partial name matches" do
-      # ["hello", "goodbye", "what?"]
-      # |> Enum.each(&generate(artist(name: &1)))
+      ["hello", "goodbye", "what?"]
+      |> Enum.each(&generate(artist(name: &1)))
 
-      # assert Enum.sort(names(Music.search_artists!("o"))) == ["goodbye", "hello"]
-      # assert names(Music.search_artists!("oo")) == ["goodbye"]
-      # assert names(Music.search_artists!("he")) == ["hello"]
+      assert Enum.sort(names(Music.search_artists!("o"))) == ["goodbye", "hello"]
+      assert names(Music.search_artists!("oo")) == ["goodbye"]
+      assert names(Music.search_artists!("he")) == ["hello"]
     end
 
     @tag :skip
@@ -51,21 +50,20 @@ defmodule Tunez.Music.ArtistTest do
       # assert actual == ["third", "second", "first"]
     end
 
-    @tag :skip
     test "can sort by latest album release" do
-      # first = generate(artist(name: "first"))
-      # generate(album(year_released: 2023, artist_id: first.id))
+      first = generate(artist(name: "first"))
+      generate(album(year_released: 2023, artist_id: first.id))
 
-      # third = generate(artist(name: "third"))
-      # generate(album(year_released: 2008, artist_id: third.id))
+      third = generate(artist(name: "third"))
+      generate(album(year_released: 2008, artist_id: third.id))
 
-      # second = generate(artist(name: "second"))
-      # generate(album(year_released: 2012, artist_id: second.id))
+      second = generate(artist(name: "second"))
+      generate(album(year_released: 2012, artist_id: second.id))
 
-      # actual =
-      #   names(Music.search_artists!("", query: [sort_input: "--latest_album_year_released"]))
+      actual =
+        names(Music.search_artists!("", query: [sort_input: "--latest_album_year_released"]))
 
-      # assert actual == ["first", "second", "third"]
+      assert actual == ["first", "second", "third"]
     end
 
     @tag :skip
