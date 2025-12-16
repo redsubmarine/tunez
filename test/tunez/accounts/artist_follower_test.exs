@@ -4,19 +4,18 @@ defmodule Tunez.Accounts.ArtistFollowerTest do
   alias Tunez.Music, warn: false
 
   describe "Tunez.Music.follow_artist/2" do
-    @tag skip: "can be enabled during chapter 9"
     test "creates a specific ArtistFollower record" do
-      # # Create some extra records so we can assert that only the correct link is created
-      # [artist_one, artist_two] = generate_many(artist(), 2)
-      # [_user_one, user_two] = generate_many(user(), 2)
+      # Create some extra records so we can assert that only the correct link is created
+      [artist_one, artist_two] = generate_many(artist(), 2)
+      [_user_one, user_two] = generate_many(user(), 2)
 
-      # assert Music.follow_artist!(artist_one, actor: user_two)
+      assert Music.follow_artist!(artist_one, actor: user_two)
 
-      # followers = Ash.load!(artist_one, :followers, authorize?: false).followers
-      # assert length(followers) == 1
-      # assert hd(followers).id == user_two.id
+      followers = Ash.load!(artist_one, :followers, authorize?: false).followers
+      assert length(followers) == 1
+      assert hd(followers).id == user_two.id
 
-      # assert [] == Ash.load!(artist_two, :followers, authorize?: false).followers
+      assert [] == Ash.load!(artist_two, :followers, authorize?: false).followers
     end
   end
 
