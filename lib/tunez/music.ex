@@ -56,7 +56,12 @@ defmodule Tunez.Music do
         action: :search,
         args: [:query],
         default_options: [
-          load: [:album_count, :latest_album_year_released, :cover_image_url]
+          load: [
+            :followed_by_me,
+            :album_count,
+            :latest_album_year_released,
+            :cover_image_url
+          ]
         ]
     end
 
