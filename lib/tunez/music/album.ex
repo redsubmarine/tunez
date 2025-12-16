@@ -12,6 +12,7 @@ defmodule Tunez.Music.Album do
 
   json_api do
     type "album"
+    includes [:tracks]
   end
 
   postgres do
@@ -113,8 +114,11 @@ defmodule Tunez.Music.Album do
   end
 
   calculations do
-    calculate :years_ago, :integer, expr(2026 - year_released)
-    calculate :string_years_ago, :string, expr("wow, this was released #{years_ago} years ago!")
+    calculate :duration, :string, Tunez.Music.Calculations.SecondsToMinutes
+  end
+
+  aggregates do
+    sum :duration_seconds, :tracks, :duration_seconds
   end
 
   identities do
