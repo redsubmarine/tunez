@@ -3,7 +3,12 @@ defmodule Tunez.Music.ArtistFollower do
     otp_app: :tunez,
     domain: Tunez.Music,
     data_layer: AshPostgres.DataLayer,
-    authorizers: [Ash.Policy.Authorizer]
+    authorizers: [Ash.Policy.Authorizer],
+    extensions: [AshGraphql.Resource]
+
+  graphql do
+    type :artist_follower
+  end
 
   postgres do
     table "artist_followers"
@@ -17,6 +22,13 @@ defmodule Tunez.Music.ArtistFollower do
 
   actions do
     defaults [:read]
+
+    create :create do
+      argument :artist, :struct do
+        allow_nil? false
+        constraints instance_of: Tunez.Music.Artist
+      end
+    end
   end
 
   policies do
