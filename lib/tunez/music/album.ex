@@ -114,7 +114,13 @@ defmodule Tunez.Music.Album do
   end
 
   calculations do
-    calculate :duration, :string, Tunez.Music.Calculations.SecondsToMinutes
+    calculate :number, :integer, expr(order + 1) do
+      public? true
+    end
+
+    calculate :duration, :string, Tunez.Music.Calculations.SecondsToMinutes do
+      public? true
+    end
   end
 
   aggregates do
