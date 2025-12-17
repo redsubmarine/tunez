@@ -25,7 +25,7 @@ defmodule Tunez.Music.Album do
   end
 
   actions do
-    defaults [:read, :destroy]
+    defaults [:read]
 
     create :create do
       accept [:name, :year_released, :cover_image_url, :artist_id]
@@ -38,6 +38,15 @@ defmodule Tunez.Music.Album do
       require_atomic? false
       argument :tracks, {:array, :map}
       change manage_relationship(:tracks, type: :direct_control, order_is_key: :order)
+    end
+
+    destroy :destroy do
+      primary? true
+
+      change cascade_destroy(:notifications,
+               return_notifications?: true,
+               after_action?: false
+             )
     end
   end
 
@@ -55,7 +64,7 @@ defmodule Tunez.Music.Album do
     end
 
     policy action_type([:update, :destroy]) do
-      authorize_if expr(^actor(:role) == :editor and created_by_id == ^actor(:id))
+      authorize_if expr(can_manage_album?)
     end
   end
 
@@ -113,6 +122,8 @@ defmodule Tunez.Music.Album do
     has_many :tracks, Tunez.Music.Track do
       sort order: :asc
     end
+
+    has_many :notifications, Tunez.Accounts.Notification
   end
 
   calculations do
@@ -123,6 +134,13 @@ defmodule Tunez.Music.Album do
     calculate :duration, :string, Tunez.Music.Calculations.SecondsToMinutes do
       public? true
     end
+
+    calculate :can_manage_album?,
+              :boolean,
+              expr(
+                ^actor(:role) == :admin or
+                  (^actor(:role) == :editor and created_by_id == ^actor(:id))
+              )
   end
 
   aggregates do
