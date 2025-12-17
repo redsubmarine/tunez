@@ -12,7 +12,7 @@ defmodule Tunez.Accounts.Notification do
 
     references do
       reference :user, index?: true, on_delete: :delete
-      reference :album, on_delete: :delete
+      reference :album
     end
   end
 
@@ -52,6 +52,7 @@ defmodule Tunez.Accounts.Notification do
     end
 
     publish :create, [:user_id]
+    publish :destroy, [:user_id]
   end
 
   attributes do
